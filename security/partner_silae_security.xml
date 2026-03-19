@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
-        <record id="module_category_partner_silae" model="ir.module.category">
-            <field name="name">Silae</field>
-            <field name="description">Droits d'accès pour le module Silae</field>
-            <field name="sequence">15</field>
-        </record>
-
         <record id="group_partner_silae_manager" model="res.groups">
             <field name="name">Manager Silae</field>
-            <field name="category_id" ref="module_category_partner_silae"/>
             <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
-    </data>
 </odoo>
