@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue Formulaire -->
+    <record id="view_partner_form_inherit_silae" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.silae</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="silae_code" placeholder="ex. S-12345"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vue Liste -->
+    <record id="view_partner_tree_inherit_silae" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit.silae</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="silae_code" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vue Kanban -->
+    <record id="res_partner_kanban_view_inherit_silae" model="ir.ui.view">
+        <field name="name">res.partner.kanban.inherit.silae</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_kanban_details')]//ul" position="inside">
+                <li t-if="record.silae_code.raw_value">
+                    <span class="badge text-bg-info" title="Code Silae">
+                        Silae: <field name="silae_code"/>
+                    </span>
+                </li>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vue Recherche -->
+    <record id="view_res_partner_filter_inherit_silae" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit.silae</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="silae_code" string="Code Silae" filter_domain="[('silae_code', 'ilike', self)]"/>
+            </xpath>
+            <xpath expr="//filter[@name='type_person']" position="after">
+                <filter string="A un Code Silae" name="has_silae_code" domain="[('silae_code', '!=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
